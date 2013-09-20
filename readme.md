@@ -116,15 +116,22 @@ Start off to read the file:
 
 ### Regex
 
-A regex should look for colors, it should for variables and their respective colors, so it should match:
+A regex should look for colors, it should for variables and their respective colors, so it should match 2 groups:
 
-	($[*.]) // capture group 1 which is $ following any text ending with colon :
-	[]    // bunch of spaces
-	[]    // capture group 2 which starts after the spaces
-	!default  ignore any mention of !default
-	;    // one color per line
+	^          // start of line
+	(\$.*)     // capture variable e.g. $very-light-color
+	:          // followed by colon
+	\s         // followed by any amount of whitespace
+	(\S*)      // any non whitespace character
+	!?.*;$     // 0 or more ! characters
+
+
+Unfinished regex, does most of the job but not perfectly yet:
+
+	^(\$.*):\s*(#\S*|([a-z]*\(\$\S*\,\s*[0-9]*)%\))\s*
 
 These colors should be saved to an array:
+(@Ruben How to save regex output to array?)
 
 	['very-light-color', '#FFF'],
 	['light-color', '#DDD'],
